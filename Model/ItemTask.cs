@@ -69,4 +69,18 @@ namespace Model
        public string ValueDivide { get; set; }
 
    }
+   public enum DbTypeEnum
+   {
+       [Description("整形")]
+       Int = 1,
+       [Description("文本值")]
+       String = 2
+   }
+   public enum ValueTypeEnum
+   {
+       [Description("列表值")]
+       ListingValue = 1,
+       [Description("文本值")]
+       TextValue =2 
+   }
 }

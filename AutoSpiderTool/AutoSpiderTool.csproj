@@ -119,6 +119,10 @@
       <Project>{50a1ce1c-e5f1-4ee1-acee-c1eb698f4683}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Provider\Provider.csproj">
+      <Project>{8aa68670-aab5-4a28-a11d-3f3fd8435455}</Project>
+      <Name>Provider</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

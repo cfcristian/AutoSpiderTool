@@ -1,5 +1,6 @@
 ﻿using Common;
 using Model;
+using Provider;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,6 +23,8 @@ namespace AutoSpiderTool
         public ListPage()
         {
             InitializeComponent();
+            LoadBind();
+
         }
 
         public ListPage(string taskName)
@@ -28,6 +32,19 @@ namespace AutoSpiderTool
             InitializeComponent();
             _taskName = taskName;
             Partask = Utils.GetTaskByTaskName(taskName);
+            LoadBind();
+        }
+
+        private void LoadBind()
+        {
+            //值类型
+            EnumManager<ValueTypeEnum>.SetCombox(ValueType);
+            //数据表
+            var listTb = DbHelper.GetTables();
+            EnumManager<object>.SetCombox(DbTable, listTb);
+
+            //类型
+            EnumManager<DbTypeEnum>.SetCombox(DbType);
 
         }
 
@@ -40,26 +57,68 @@ namespace AutoSpiderTool
             task.PageNoRegex = txtPageRegex.Text.Trim();
             task.IsInDb = ckIndb.Checked;
             task.Lever = Partask == null ? 0 : Partask.Lever + 1; //vali
-           // task.Fields = 
-            
+            // task.Fields =
+             
+
 
 
         }
 
 
-        private void BindFields()
+        
+
+        private void dv1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if (this.dv1.Rows != null && this.dv1.Rows.Count > 0)
+            DataGridView dgv = sender as DataGridView;
+
+            //判断相应的列		 
+
+            if (dgv.CurrentCell.GetType().Name == "DataGridViewComboEditBoxCell" && dgv.CurrentCell.RowIndex != -1)
             {
-                foreach (DataGridViewRow item in dv1.Rows)
-                {
-                    var fd = new FieldProperty();
-                    fd.DbName = item.Cells[0].Value.ToString();
-                     
-
-
-                }
+                //给这个DataGridViewComboBoxCell加上下拉事件
+                (e.Control as ComboBox).SelectedIndexChanged += ListPage_SelectedIndexChanged;
             }
         }
+
+        public void ListPage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+             ComboBox combox=sender as ComboBox;
+
+            //这里比较重要
+            combox.Leave+=new EventHandler(combox_Leave);
+             try
+             {
+                 //在这里就可以做值是否改变判断
+                 if (combox.SelectedItem != null)
+                 {
+                     var selValue = combox.SelectedValue.ToString();
+                     if (!string.IsNullOrEmpty(selValue))
+                     {
+                         EnumManager<object>.SetCombox(DbName, DbHelper.GetColumns(selValue));
+                     }
+                 }
+                 Thread.Sleep(100);
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show(ex.Message);
+             }
+        }
+
+ 
+          
+
+        /// <summary>
+        /// 离开combox时，把事件删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void combox_Leave(object sender, EventArgs e)
+        {
+            ComboBox combox = sender as ComboBox;
+            //做完处理，须撤销动态事件
+            combox.SelectedIndexChanged -= new EventHandler(ListPage_SelectedIndexChanged);
+        }
+
     }
 }

@@ -41,19 +41,19 @@
             this.ckIndb = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dv1 = new System.Windows.Forms.DataGridView();
-            this.DbName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DbText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ValueDivide = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewComboEditBoxColumn1 = new AutoSpiderTool.DataGridViewComboEditBoxColumn();
             this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.dataGridViewComboBoxColumn2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.dataGridViewComboBoxColumn3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.DbTable = new AutoSpiderTool.DataGridViewComboEditBoxColumn();
-            this.DbType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ValutType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ValuexPath = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.DbTable = new AutoSpiderTool.DataGridViewComboEditBoxColumn();
+            this.DbName = new AutoSpiderTool.DataGridViewComboEditBoxColumn();
+            this.DbType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.DbText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ValuexPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ValueType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.ValueDivide = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dv1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -162,35 +162,19 @@
             this.dv1.AllowDrop = true;
             this.dv1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dv1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DbName,
-            this.DbText,
             this.DbTable,
+            this.DbName,
             this.DbType,
-            this.ValutType,
+            this.DbText,
             this.ValuexPath,
+            this.ValueType,
             this.ValueDivide});
             this.dv1.Location = new System.Drawing.Point(43, 315);
             this.dv1.Name = "dv1";
             this.dv1.RowTemplate.Height = 27;
             this.dv1.Size = new System.Drawing.Size(751, 204);
             this.dv1.TabIndex = 18;
-            // 
-            // DbName
-            // 
-            this.DbName.DataPropertyName = "DbName";
-            this.DbName.HeaderText = "列名";
-            this.DbName.Name = "DbName";
-            // 
-            // DbText
-            // 
-            this.DbText.DataPropertyName = "DbText";
-            this.DbText.HeaderText = "描述名";
-            this.DbText.Name = "DbText";
-            // 
-            // ValueDivide
-            // 
-            this.ValueDivide.HeaderText = "分隔符";
-            this.ValueDivide.Name = "ValueDivide";
+            this.dv1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dv1_EditingControlShowing);
             // 
             // dataGridViewComboEditBoxColumn1
             // 
@@ -213,27 +197,6 @@
             this.dataGridViewComboBoxColumn3.HeaderText = "值xPath";
             this.dataGridViewComboBoxColumn3.Name = "dataGridViewComboBoxColumn3";
             // 
-            // DbTable
-            // 
-            this.DbTable.HeaderText = "表名";
-            this.DbTable.Name = "DbTable";
-            this.DbTable.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // DbType
-            // 
-            this.DbType.HeaderText = "类型";
-            this.DbType.Name = "DbType";
-            // 
-            // ValutType
-            // 
-            this.ValutType.HeaderText = "值类型";
-            this.ValutType.Name = "ValutType";
-            // 
-            // ValuexPath
-            // 
-            this.ValuexPath.HeaderText = "值xPath";
-            this.ValuexPath.Name = "ValuexPath";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -249,6 +212,48 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(80, 25);
             this.textBox1.TabIndex = 20;
+            // 
+            // DbTable
+            // 
+            this.DbTable.HeaderText = "表名";
+            this.DbTable.Name = "DbTable";
+            this.DbTable.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // DbName
+            // 
+            this.DbName.DataPropertyName = "DbName";
+            this.DbName.HeaderText = "列名";
+            this.DbName.Name = "DbName";
+            this.DbName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.DbName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // DbType
+            // 
+            this.DbType.HeaderText = "类型";
+            this.DbType.Name = "DbType";
+            // 
+            // DbText
+            // 
+            this.DbText.DataPropertyName = "DbText";
+            this.DbText.HeaderText = "描述名";
+            this.DbText.Name = "DbText";
+            // 
+            // ValuexPath
+            // 
+            this.ValuexPath.HeaderText = "值xPath";
+            this.ValuexPath.Name = "ValuexPath";
+            this.ValuexPath.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ValuexPath.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ValueType
+            // 
+            this.ValueType.HeaderText = "值类型";
+            this.ValueType.Name = "ValueType";
+            // 
+            // ValueDivide
+            // 
+            this.ValueDivide.HeaderText = "分隔符";
+            this.ValueDivide.Name = "ValueDivide";
             // 
             // ListPage
             // 
@@ -294,18 +299,18 @@
         private System.Windows.Forms.CheckBox ckIndb;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dv1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DbName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DbText;
-        private DataGridViewComboEditBoxColumn DbTable;
-        private System.Windows.Forms.DataGridViewComboBoxColumn DbType;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ValutType;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ValuexPath;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ValueDivide;
         private DataGridViewComboEditBoxColumn dataGridViewComboEditBoxColumn1;
         private System.Windows.Forms.DataGridViewComboBoxColumn dataGridViewComboBoxColumn1;
         private System.Windows.Forms.DataGridViewComboBoxColumn dataGridViewComboBoxColumn2;
         private System.Windows.Forms.DataGridViewComboBoxColumn dataGridViewComboBoxColumn3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
+        private DataGridViewComboEditBoxColumn DbTable;
+        private DataGridViewComboEditBoxColumn DbName;
+        private System.Windows.Forms.DataGridViewComboBoxColumn DbType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DbText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ValuexPath;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ValueType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ValueDivide;
     }
 }
